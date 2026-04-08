@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тәттібүбү — Менің Жүрегім</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #e8a0a0;
+    --rose-light: #f5d5d5;
+    --rose-deep: #c46b6b;
+    --cream: #fdf6f0;
+    --gold: #c9a96e;
+    --gold-light: #e8d5b0;
+    --text-dark: #3a2a2a;
+    --text-mid: #6b4a4a;
+    --text-light: #9b7a7a;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text-dark);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  /* PETALS FALLING */
+  .petals-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    top: -40px;
+    font-size: 1.2rem;
+    opacity: 0.5;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-40px) rotate(0deg) translateX(0); opacity: 0.6; }
+    50% { transform: translateY(50vh) rotate(180deg) translateX(30px); }
+    100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); opacity: 0; }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(160deg, #fff5f5 0%, #fde8e8 40%, #fdf0e8 100%);
+    overflow: hidden;
+    padding: 40px 20px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(232,160,160,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; right: -150px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(201,169,110,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 8s ease-in-out infinite reverse;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+
+  .hero-bismillah {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--gold);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 1.5s ease forwards 0.3s;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 600;
+    color: var(--rose-deep);
+    line-height: 1;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 1.5s ease forwards 0.6s;
+    text-shadow: 0 4px 30px rgba(196,107,107,0.2);
+  }
+
+  .hero-sub {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--text-mid);
+    font-style: italic;
+    margin-top: 16px;
+    opacity: 0;
+    animation: fadeUp 1.5s ease forwards 0.9s;
+    text-align: center;
+  }
+
+  .hero-divider {
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 28px auto;
+    opacity: 0;
+    animation: fadeUp 1.5s ease forwards 1.2s;
+  }
+
+  .hero-quote {
+    max-width: 600px;
+    text-align: center;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-mid);
+    font-style: italic;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 1.5s ease forwards 1.5s;
+    padding: 0 20px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1.5s ease forwards 2s;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .scroll-hint span {
+    animation: bounce 2s ease-in-out infinite;
+    font-size: 1.2rem;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION INTRO */
+  .section-intro {
+    text-align: center;
+    padding: 80px 20px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--rose-deep);
+    font-style: italic;
+  }
+
+  /* PHOTO GRID */
+  .gallery {
+    padding: 20px 30px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .photo-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 50px;
+    max-width: 1000px;
+    margin: 0 auto 90px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .photo-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .photo-card:nth-child(even) {
+    direction: rtl;
+  }
+
+  .photo-card:nth-child(even) .card-text {
+    direction: ltr;
+    text-align: right;
+  }
+
+  .photo-frame {
+    position: relative;
+  }
+
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: -12px;
+    right: 12px; bottom: 12px;
+    border: 2px solid var(--rose-light);
+    border-radius: 4px;
+    z-index: 0;
+    transition: all 0.4s ease;
+  }
+
+  .photo-card:hover .photo-frame::before {
+    top: -16px; left: -16px;
+    border-color: var(--gold-light);
+  }
+
+  .photo-frame img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+    position: relative;
+    z-index: 1;
+    filter: saturate(0.9);
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+
+  .photo-card:hover .photo-frame img {
+    filter: saturate(1.05);
+    transform: scale(1.02);
+  }
+
+  /* PLACEHOLDER for photos */
+  .photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, var(--rose-light) 0%, #fde0d5 100%);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    border: 2px dashed var(--rose);
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .photo-placeholder:hover {
+    background: linear-gradient(135deg, #f5c5c5 0%, #fdd0c0 100%);
+    border-color: var(--rose-deep);
+  }
+
+  .photo-placeholder .ph-icon { font-size: 2.5rem; }
+  .photo-placeholder .ph-label {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    text-align: center;
+    font-style: italic;
+    padding: 0 20px;
+  }
+
+  .photo-placeholder input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card-number {
+    font-size: 4rem;
+    font-family: 'Playfair Display', serif;
+    color: var(--rose-light);
+    line-height: 1;
+    font-style: italic;
+  }
+
+  .card-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    line-height: 1.8;
+    direction: rtl;
+  }
+
+  .card-quote {
+    font-size: 1.15rem;
+    color: var(--text-mid);
+    font-style: italic;
+    line-height: 1.9;
+  }
+
+  .card-source {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+
+  /* BIRTHDAY SECTION */
+  .birthday {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 80px 20px;
+    background: linear-gradient(160deg, #fff0f0, #fde8d8, #fef5e8);
+  }
+
+  .birthday::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(232,160,160,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(201,169,110,0.25) 0%, transparent 50%);
+  }
+
+  .birthday-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .birthday-flowers {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    animation: sway 4s ease-in-out infinite;
+    display: block;
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  .birthday-label {
+    font-size: 0.85rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .birthday-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    color: var(--rose-deep);
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .birthday-name {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    color: var(--gold);
+    margin-bottom: 40px;
+    direction: rtl;
+  }
+
+  .birthday-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin: 30px 0;
+  }
+
+  .birthday-divider span { color: var(--rose); font-size: 1.2rem; }
+  .birthday-divider::before,
+  .birthday-divider::after {
+    content: '';
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--rose));
+  }
+  .birthday-divider::after {
+    background: linear-gradient(to left, transparent, var(--rose));
+  }
+
+  .birthday-message {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--text-mid);
+    line-height: 2;
+    font-style: italic;
+    margin-bottom: 40px;
+  }
+
+  .birthday-hadith {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--rose-light);
+    border-radius: 8px;
+    padding: 30px 40px;
+    margin: 30px 0;
+    backdrop-filter: blur(10px);
+  }
+
+  .birthday-hadith .arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    direction: rtl;
+    margin-bottom: 12px;
+  }
+
+  .birthday-hadith .translation {
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    font-style: italic;
+    line-height: 1.8;
+  }
+
+  .birthday-hadith .source {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  .heart-animation {
+    font-size: 3rem;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    display: inline-block;
+    margin-top: 30px;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.25); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+  }
+
+  .signature {
+    margin-top: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--text-mid);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .photo-card {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .photo-card:nth-child(even) {
+      direction: ltr;
+    }
+    .photo-card:nth-child(even) .card-text {
+      text-align: left;
+    }
+    .gallery { padding: 20px 16px 60px; }
+    .birthday-hadith { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Falling petals -->
+<div class="petals-container" id="petals"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+  <h1 class="hero-name">Тәттібүбү</h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">Менің жүрегімнің нұры • Свет моего сердца</p>
+  <div class="hero-divider"></div>
+  <p class="hero-quote">
+    «И среди Его знамений — то, что Он создал для вас из вас самих супруг, чтобы вы находили в них покой, и установил между вами любовь и милосердие»
+    <br><br><small style="color:var(--gold);letter-spacing:2px;font-size:0.8rem;">— КОРАН 30:21</small>
+  </p>
+  <div class="scroll-hint">
+    <span>↓</span>
+    <span style="font-size:0.75rem">прокрутите вниз</span>
+  </div>
+</section>
+
+<!-- SECTION TITLE -->
+<div class="section-intro">
+  <div class="section-label">наши моменты</div>
+  <h2 class="section-title">Каждое воспоминание — это дар от Аллаха</h2>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery">
+
+  <!-- Card 1 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌸</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 1</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">01</div>
+      <div class="card-arabic">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا</div>
+      <div class="card-quote">«И среди Его знамений — что Он создал для вас супруг из вас самих, чтобы вы находили в них покой»</div>
+      <div class="card-source">Коран 30:21</div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌹</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 2</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">02</div>
+      <div class="card-arabic">خَيْرُكُمْ خَيْرُكُمْ لِأَهْلِهِ</div>
+      <div class="card-quote">«Лучший из вас тот, кто лучше всего относится к своей семье»</div>
+      <div class="card-source">Хадис (Тирмизи)</div>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">✨</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 3</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">03</div>
+      <div class="card-arabic">هُنَّ لِبَاسٌ لَّكُمْ وَأَنتُمْ لِبَاسٌ لَّهُنَّ</div>
+      <div class="card-quote">«Они — одеяние для вас, а вы — одеяние для них» — вы укрываете и защищаете друг друга</div>
+      <div class="card-source">Коран 2:187</div>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">💐</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 4</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">04</div>
+      <div class="card-arabic">الدُّنْيَا مَتَاعٌ وَخَيْرُ مَتَاعِهَا الْمَرْأَةُ الصَّالِحَةُ</div>
+      <div class="card-quote">«Мирская жизнь — это наслаждение, и лучшее наслаждение в ней — праведная жена»</div>
+      <div class="card-source">Хадис (Муслим)</div>
+    </div>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌺</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 5</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">05</div>
+      <div class="card-arabic">وَعَاشِرُوهُنَّ بِالْمَعْرُوفِ</div>
+      <div class="card-quote">«Обращайтесь с ними достойно» — в доброте, уважении и любви</div>
+      <div class="card-source">Коран 4:19</div>
+    </div>
+  </div>
+
+  <!-- Card 6 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🕊️</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 6</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">06</div>
+      <div class="card-arabic">وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</div>
+      <div class="card-quote">«И установил между вами любовь и милосердие» — это и есть наш союз</div>
+      <div class="card-source">Коран 30:21</div>
+    </div>
+  </div>
+
+  <!-- Card 7 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌙</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 7</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">07</div>
+      <div class="card-arabic">إِذَا أَحَبَّ أَحَدُكُمْ أَخَاهُ فَلْيُعْلِمْهُ</div>
+      <div class="card-quote">«Если кто-то любит другого, пусть скажет ему об этом» — и я говорю тебе: я люблю тебя</div>
+      <div class="card-source">Хадис (Абу Давуд)</div>
+    </div>
+  </div>
+
+  <!-- Card 8 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">⭐</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 8</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">08</div>
+      <div class="card-arabic">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ</div>
+      <div class="card-quote">«Господь наш, подари нам от наших супругов и потомков отраду для глаз»</div>
+      <div class="card-source">Коран 25:74</div>
+    </div>
+  </div>
+
+  <!-- Card 9 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌷</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 9</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">09</div>
+      <div class="card-arabic">تَزَوَّجُوا الْوَدُودَ الْوَلُودَ</div>
+      <div class="card-quote">«Женитесь на любящих и нежных» — ты именно такая, и я благодарю Аллаха за тебя каждый день</div>
+      <div class="card-source">Хадис (Насаи)</div>
+    </div>
+  </div>
+
+  <!-- Card 10 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌸</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 10</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">10</div>
+      <div class="card-arabic">إِنَّ اللَّهَ جَمِيلٌ يُحِبُّ الْجَمَالَ</div>
+      <div class="card-quote">«Воистину, Аллах красив и любит красоту» — а ты прекраснее всего, что Он сотворил</div>
+      <div class="card-source">Хадис (Муслим)</div>
+    </div>
+  </div>
+
+  <!-- Card 11 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">💫</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 11</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">11</div>
+      <div class="card-arabic">النِّكَاحُ مِنْ سُنَّتِي</div>
+      <div class="card-quote">«Брак — это моя сунна» — наш союз благословлён Всевышним и Его Пророком ﷺ</div>
+      <div class="card-source">Хадис (Ибн Маджа)</div>
+    </div>
+  </div>
+
+  <!-- Card 12 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌹</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 12</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">12</div>
+      <div class="card-arabic">أَكْمَلُ الْمُؤْمِنِينَ إِيمَانًا أَحْسَنُهُمْ خُلُقًا وَخِيَارُهُمْ لِنِسَائِهِمْ</div>
+      <div class="card-quote">«Наиболее совершенный в вере тот, кто наилучшим образом обращается со своей женой»</div>
+      <div class="card-source">Хадис (Тирмизи)</div>
+    </div>
+  </div>
+
+  <!-- Card 13 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">✨</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 13</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">13</div>
+      <div class="card-arabic">وَلَهُنَّ مِثْلُ الَّذِي عَلَيْهِنَّ بِالْمَعْرُوفِ</div>
+      <div class="card-quote">«У жён те же права, что и обязанности, и всё — по достоинству» — ты достойна лучшего</div>
+      <div class="card-source">Коран 2:228</div>
+    </div>
+  </div>
+
+  <!-- Card 14 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🕊️</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 14</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">14</div>
+      <div class="card-arabic">مَا أَكْرَمَ النِّسَاءَ إِلَّا كَرِيمٌ</div>
+      <div class="card-quote">«Только достойный человек чтит женщин» — я хочу быть достойным тебя каждый день</div>
+      <div class="card-source">Хадис (Ибн Хиббан)</div>
+    </div>
+  </div>
+
+  <!-- Card 15 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌺</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 15</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">15</div>
+      <div class="card-arabic">لَوْ كُنْتُ آمِرًا أَحَدًا أَنْ يَسْجُدَ لِأَحَدٍ</div>
+      <div class="card-quote">«Если бы я повелел кому-то совершить земной поклон перед кем-то, я бы повелел жене поклониться мужу, а ему быть достойным этого»</div>
+      <div class="card-source">Хадис (Тирмизи)</div>
+    </div>
+  </div>
+
+  <!-- Card 16 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">💝</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 16</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">16</div>
+      <div class="card-arabic">إِنَّكِ لَمَّا دَخَلْتِ قَلْبِي لَمْ تَخْرُجِي</div>
+      <div class="card-quote">«Ты вошла в моё сердце — и больше не выходила» — с того момента как я тебя встретил</div>
+      <div class="card-source">Признание от сердца</div>
+    </div>
+  </div>
+
+  <!-- Card 17 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌙</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 17</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">17</div>
+      <div class="card-arabic">اللَّهُمَّ بَارِكْ لَنَا فِي أَهْلِنَا</div>
+      <div class="card-quote">«О Аллах, благослови нас в наших семьях» — эта дуа в моём сердце каждый день, и она — о тебе</div>
+      <div class="card-source">Дуа</div>
+    </div>
+  </div>
+
+  <!-- Card 18 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">⭐</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 18</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">18</div>
+      <div class="card-arabic">وَلِكُلِّ وَاحِدٍ مِنْهُمَا حَقٌّ عَلَى صَاحِبِهِ</div>
+      <div class="card-quote">«У каждого из них есть права по отношению к другому» — и я клянусь выполнять все свои обязательства перед тобой</div>
+      <div class="card-source">Исламская этика брака</div>
+    </div>
+  </div>
+
+  <!-- Card 19 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌷</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 19</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">19</div>
+      <div class="card-arabic">سَكَنٌ وَمَوَدَّةٌ وَرَحْمَةٌ</div>
+      <div class="card-quote">Покой, любовь и милосердие — три столпа нашей жизни вместе. Ты мой покой, моя любовь, моя милость</div>
+      <div class="card-source">Коран 30:21 (суть)</div>
+    </div>
+  </div>
+
+  <!-- Card 20 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌸</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 20</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">20</div>
+      <div class="card-arabic">رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ</div>
+      <div class="card-quote">«Господь мой, я нуждаюсь в любом добре, которое Ты ниспошлёшь мне» — и Аллах ниспослал мне тебя</div>
+      <div class="card-source">Коран 28:24</div>
+    </div>
+  </div>
+
+  <!-- Card 21 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">💫</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 21</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">21</div>
+      <div class="card-arabic">اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ</div>
+      <div class="card-quote">С тобой рядом я нашёл свой покой. Ты — мой дом. Где ты — там моё сердце</div>
+      <div class="card-source">От сердца к сердцу</div>
+    </div>
+  </div>
+
+  <!-- Card 22 -->
+  <div class="photo-card">
+    <div class="photo-frame">
+      <div class="photo-placeholder">
+        <span class="ph-icon">🌹</span>
+        <span class="ph-label">Нажмите, чтобы загрузить фото 22</span>
+        <input type="file" accept="image/*" onchange="loadPhoto(this)">
+      </div>
+    </div>
+    <div class="card-text">
+      <div class="card-number">22</div>
+      <div class="card-arabic">أُحِبُّكِ فِي اللهِ</div>
+      <div class="card-quote">«Я люблю тебя ради Аллаха» — это высшая форма любви, та, что не исчезает ни в этой жизни, ни в следующей</div>
+      <div class="card-source">Сунна Пророка ﷺ</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- BIRTHDAY SECTION -->
+<section class="birthday">
+  <div class="birthday-inner">
+    <span class="birthday-flowers">🌸🌷🌺</span>
+    <div class="birthday-label">с днём рождения</div>
+    <h2 class="birthday-title">Туған күніңмен,</h2>
+    <div class="birthday-name">تاتتيبوبو</div>
+
+    <div class="birthday-divider"><span>🌸</span></div>
+
+    <p class="birthday-message">
+      В этот особый день я хочу сказать тебе то,<br>
+      что чувствую каждое утро, просыпаясь рядом с тобой:<br><br>
+      <strong style="color:var(--rose-deep); font-family:'Playfair Display',serif; font-size:1.3em;">
+        «Ты — лучшее, что Аллах даровал мне в этой жизни»
+      </strong>
+    </p>
+
+    <div class="birthday-hadith">
+      <div class="arabic">اللَّهُمَّ بَارِكْ فِيهَا وَبَارِكْ لَهَا</div>
+      <div class="translation">«О Аллах, благослови её и благослови для неё» — эта молитва моих уст и моего сердца в день твоего рождения</div>
+      <div class="source">Дуа</div>
+    </div>
+
+    <p class="birthday-message">
+      Да хранит тебя Аллах.<br>
+      Да наполнит Он твою жизнь радостью, здоровьем и светом.<br>
+      Да будут все твои дуа услышаны.<br>
+      Да встретим мы старость вместе — рука в руке.<br><br>
+      Пусть каждый твой день будет лучше предыдущего,<br>
+      а следующий год принесёт только счастье.
+    </p>
+
+    <div class="birthday-hadith">
+      <div class="arabic">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً</div>
+      <div class="translation">«Господь наш, даруй нам добро в этом мире и добро в мире вечном» — аминь, ради тебя</div>
+      <div class="source">Коран 2:201</div>
+    </div>
+
+    <div class="heart-animation">❤️</div>
+
+    <div class="signature">
+      <p>С любовью, которая не умещается в словах —</p>
+      <p style="font-size:1.6rem; color:var(--rose-deep); margin-top:8px;">Твой муж</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Falling petals
+  const petalEmojis = ['🌸', '🌺', '🌷', '✿', '❀', '🍃'];
+  const container = document.getElementById('petals');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.fontSize = (0.8 + Math.random() * 1) + 'rem';
+    container.appendChild(p);
+  }
+
+  // Scroll reveal
+  const cards = document.querySelectorAll('.photo-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(c => observer.observe(c));
+
+  // Photo upload
+  function loadPhoto(input) {
+    if (!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const placeholder = input.closest('.photo-placeholder');
+      const frame = placeholder.closest('.photo-frame');
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.cssText = 'width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px;display:block;position:relative;z-index:1;';
+      placeholder.replaceWith(img);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+</script>
+</body>
+</html>
